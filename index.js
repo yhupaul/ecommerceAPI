@@ -1,16 +1,18 @@
 const express = require('express');
 const app = express();
 const mongoose = require("mongoose");
+const dotenv = require("dotenv"); 
+
+dotenv.config();
+//this is the way using env file for security
 
 mongoose
-.connect(
-  "mongodb+srv://ydan:Lena1207@cluster0.wnuppec.mongodb.net/shop?retryWrites=true&w=majority"
-  ) //this is secet key
-.then(() => console.log("DBConnection Successfull!"))
+.connect(process.env.MONGO_URL) //this is secet key
+.then(() => console.log("DB Connection Successfull!"))
 .catch((err) => {
   console.log(err);
 });
 
-app.listen(8000, () => {
+app.listen(process.env.PROT || 8000, () => { //it there is port, use the one in env file otherwhiles use local 8000
   console.log("Backend server is running!");
 }); 
